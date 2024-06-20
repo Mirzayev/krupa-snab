@@ -1,16 +1,16 @@
 import React from "react"
 import { BrowserRouter, Routes,Route} from "react-router-dom";
-import HomePage from "./pages/home/HomePage.jsx";
-import MySales from "./pages/my-sales/MySales.jsx";
-import SalesDepartment from "./pages/sales-department/SalesDepartment.jsx";
-import LoadedSales from "./pages/loaded-sales/LoadedSales.jsx";
-import CompletedOrder from "./pages/completed-order/CompletedOrder.jsx";
-import SIgnUp from "./components/sign-up/SIgnUp.jsx";
-import SPurchases from "./pages/purchases/SPurchases.jsx";
-import WarehouseAccount from "./pages/ warehouse-accout/ WarehouseAccout.jsx";
-import MovingCargo from "./pages/moving-cargo/MovingCargo.jsx";
-import MovingCargoRequest from "./pages/moving-cargo-request/MovingCargoRequest.jsx";
-import MainPage from "./pages/main/MainPage.jsx";
+import HomePage from "./home/HomePage.jsx";
+import MySales from "../pages/my-sales/MySales.jsx";
+import SalesDepartment from "../pages/sales-department/SalesDepartment.jsx";
+import LoadedSales from "../pages/loaded-sales/LoadedSales.jsx";
+import CompletedOrder from "../pages/completed-order/CompletedOrder.jsx";
+import SIgnUp from "../components/sign-up/SIgnUp.jsx";
+import SPurchases from "../pages/purchases/SPurchases.jsx";
+import WarehouseAccount from "../pages/ warehouse-accout/ WarehouseAccout.jsx";
+import MovingCargo from "../pages/moving-cargo/MovingCargo.jsx";
+import MovingCargoRequest from "../pages/moving-cargo-request/MovingCargoRequest.jsx";
+import MainPage from "../pages/main/MainPage.jsx";
 
 
  function RootLayout(){

@@ -1,15 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
+import { Button, Input, Space, Table, Modal } from 'antd';
 import Highlighter from 'react-highlight-words';
-import Layout from "../../components/Layout/index.jsx";
+import Layout from "../../whs-manager/Layout/index.jsx";
 import API from "../../store/API.jsx";
+import RowDetailsModal from "../../components/modal/RowDetailsModal.jsx";
+
 
 const Purchases = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [modalVisible, setModalVisible] = useState(false);
+    const [selectedRowData, setSelectedRowData] = useState(null); // State to hold selected row data
+
     const searchInput = useRef(null);
 
     useEffect(() => {
@@ -150,7 +155,6 @@ const Purchases = () => {
             width: '15%',
             ...getColumnSearchProps('docNum'),
         },
-
         {
             title: 'Sana',
             dataIndex: 'docDueDate',
@@ -165,13 +169,32 @@ const Purchases = () => {
             width: '15%',
             ...getColumnSearchProps('docTotal'),
         },
-
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text, record) => (
+                <Button type="link" onClick={() => handleRowDetails(record)}>
+                    Show Details
+                </Button>
+            ),
+        },
     ];
+
+    const handleRowDetails = (record) => {
+        setSelectedRowData(record);
+        setModalVisible(true);
+    };
 
     return (
         <Layout>
             <h3 className={'pt-16 pb-10 px-12 text-2xl font-bold border-b-2'}>Xaridlar</h3>
             <Table className={'py-8 px-8'} columns={columns} dataSource={data} loading={isLoading} />
+
+            <RowDetailsModal
+                open={modalVisible}
+                onClose={() => setModalVisible(false)}
+                rowData={selectedRowData}
+            />
         </Layout>
     );
 };

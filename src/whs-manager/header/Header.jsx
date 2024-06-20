@@ -1,6 +1,6 @@
-import SIgnUp from "../sign-up/SIgnUp.jsx";
+import SIgnUp from "../../components/sign-up/SIgnUp.jsx";
 import MySales from "../../pages/my-sales/MySales.jsx";
-import RootLayout from "../../RootLayout.jsx";
+import RootLayout from "../RootLayout.jsx";
 
 export default function Header() {
     return (

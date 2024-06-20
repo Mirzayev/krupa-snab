@@ -10,14 +10,10 @@ export default function LeftBar() {
     const navigate = useNavigate();
     const location = useLocation();
     const [menu, setMenu] = useState(false);
-    const [collapsed, setCollapsed] = useState(false); // New state for collapsing
+    const [collapsed, setCollapsed] = useState(false);
     const [subMenu, setSubMenu] = useState(false);
 
     const toggleMenu = () => {
-        const menubar = document.querySelector('.menuBar');
-        if (menubar) {
-            menubar.style.transition = 'all 0.8s ease';
-        }
         setMenu(!menu);
     };
 
@@ -38,7 +34,6 @@ export default function LeftBar() {
             <div className="flex justify-between items-center gap-5">
                 {!collapsed && <img className="max-w-[130px]" src={LeftLogo} alt="Logo" />}
                 <MenuFoldOutlined className='text-xl cursor-pointer' onClick={toggleCollapse} />
-                {/*<img className="max-w-6 max-h-5 cursor-pointer" src={navbarClose} alt="" />*/}
             </div>
 
             {!collapsed && (

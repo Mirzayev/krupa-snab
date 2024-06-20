@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../header/Header.jsx";
-import LeftBar from "../left-bar/LeftBar.jsx";
-import SIgnUp from "../sign-up/SIgnUp.jsx";
+import LeftBar from "../../components/left-bar/LeftBar.jsx";
+import SIgnUp from "../../components/sign-up/SIgnUp.jsx";
 
 const accessToken = localStorage.accesToken;
 

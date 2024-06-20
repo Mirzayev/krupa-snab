@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {SearchOutlined} from '@ant-design/icons';
 import {Button, Input, Space, Table} from 'antd';
 import Highlighter from 'react-highlight-words';
-import Layout from "../../components/Layout/index.jsx";
+import Layout from "../../whs-manager/Layout/index.jsx";
 import API from "../../store/API.jsx";
 import {Modal} from 'antd';
 
