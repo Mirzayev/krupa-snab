@@ -4,6 +4,7 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import Layout from "../../components/Layout/index.jsx";
 import API from "../../store/API.jsx";
+import RowDetailsModal from "../../components/modal/RowDetailsModal.jsx";
 
 const SalesDepartment = () => {
     const [searchText, setSearchText] = useState('');
@@ -11,6 +12,8 @@ const SalesDepartment = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const searchInput = useRef(null);
+    const [selectedRow, setSelectedRow] = useState(null); // State for selected row
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
     useEffect(() => {
         const fetchData = async () => {
@@ -170,7 +173,6 @@ const SalesDepartment = () => {
             key: 'slpName',
             width: '15%',
             ...getColumnSearchProps('slpName'),
-
         },
         {
             title: 'Haydovchi',
@@ -178,15 +180,48 @@ const SalesDepartment = () => {
             key: 'docDueDate',
             width: '15%',
             ...getColumnSearchProps('docDueDate'),
-
         },
-
+        {
+            title: 'Yuklash',
+            key: 'action',
+            width: '15%',
+            render: (_, record) => (
+                <Button type="primary" onClick={() => handleRowClick(record)}>
+                    Yuklash
+                </Button>
+            ),
+        },
     ];
+
+    const handleRowClick = (record) => {
+        setSelectedRow(record);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setSelectedRow(null);
+        setIsModalOpen(false);
+    };
 
     return (
         <Layout>
             <h3 className={'pt-16 pb-10 px-12 text-2xl font-bold border-b-2'}>Yuklangan buyurtmalar</h3>
-            <Table className={'py-8 px-8'} columns={columns} dataSource={data} loading={isLoading} />
+            <Table
+                className={'py-8 px-8'}
+                columns={columns}
+                dataSource={data}
+                loading={isLoading}
+                onRow={(record) => ({
+                    onClick: () => handleRowClick(record), // Set row click event
+                })}
+            />
+            {selectedRow && (
+                <RowDetailsModal
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    rowData={selectedRow}
+                />
+            )}
         </Layout>
     );
 };

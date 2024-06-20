@@ -4,6 +4,8 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import Layout from "../../components/Layout/index.jsx";
 import API from "../../store/API.jsx";
+import RowDetailsModal from "../../components/modal/RowDetailsModal.jsx";
+
 
 const CompletedOrder = () => {
     const [searchText, setSearchText] = useState('');
@@ -11,6 +13,8 @@ const CompletedOrder = () => {
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const searchInput = useRef(null);
+    const [selectedRow, setSelectedRow] = useState(null); // State for selected row
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
     useEffect(() => {
         const fetchData = async () => {
@@ -170,7 +174,6 @@ const CompletedOrder = () => {
             key: 'slpName',
             width: '15%',
             ...getColumnSearchProps('slpName'),
-
         },
         {
             title: 'Haydovchi',
@@ -178,15 +181,39 @@ const CompletedOrder = () => {
             key: 'docDueDate',
             width: '15%',
             ...getColumnSearchProps('docDueDate'),
-
         },
 
     ];
 
+    const handleRowClick = (record) => {
+        setSelectedRow(record);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setSelectedRow(null);
+        setIsModalOpen(false);
+    };
+
     return (
         <Layout>
             <h3 className={'pt-16 pb-10 px-12 text-2xl font-bold border-b-2'}>Yakunlangan buyurtmalar</h3>
-            <Table className={'py-8 px-8'} columns={columns} dataSource={data} loading={isLoading} />
+            <Table
+                className={'py-8 px-8'}
+                columns={columns}
+                dataSource={data}
+                loading={isLoading}
+                onRow={(record) => ({
+                    onClick: () => handleRowClick(record), // Set row click event
+                })}
+            />
+            {selectedRow && (
+                <RowDetailsModal
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    rowData={selectedRow}
+                />
+            )}
         </Layout>
     );
 };
