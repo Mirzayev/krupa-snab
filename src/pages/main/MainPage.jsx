@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from "../../whs-manager/Layout/index.jsx"; // Adjust this import according to your project structure
+import Layout from "../../whs-manager/Layout/WhsManager.jsx"; // Adjust this import according to your project structure
 import SDiagram from "../../components/diagrams/SDiagram.jsx";
 import Diagram2 from "../../components/diagrams/SDiagram2.jsx";
 import SDiagram3 from "../../components/diagrams/SDiagram3.jsx";

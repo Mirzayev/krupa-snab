@@ -4,32 +4,24 @@ import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
 import Layout from "../../whs-manager/Layout/WhsManager.jsx";
 import API from "../../store/API.jsx";
+import RowDetailsModal from "../../components/modal/RowDetailsModal.jsx";
 
-const MovingCargo = () => {
+const ClientList = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const searchInput = useRef(null);
+    const [selectedRow, setSelectedRow] = useState(null); // State for selected row
+    const [isModalOpen, setIsModalOpen] = useState(false); // State for modal visibility
 
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await API.get('/inventorytransferrequest/getconfirmed');
+                const response = await API.get('/yuklanganbuyurtmalar/no-pagination');
                 const res = await response.data;
-
-                const formattedData = res.map(item => {
-                    const fromWarehouseCode = item.stockTransferLines[0]?.fromWarehouseCode || '';
-                    const toWarehouseCode = item.stockTransferLines[0]?.warehouseCode || '';
-                    return {
-                        ...item,
-                        fromWarehouseCode,
-                        toWarehouseCode
-                    }
-                });
-
-                setData(formattedData);
+                setData(res);
                 setIsLoading(false);
             } catch (error) {
                 console.log(error);
@@ -148,34 +140,110 @@ const MovingCargo = () => {
 
     const columns = [
         {
-            title: 'Buyurtma raqami',
-            dataIndex: 'docEntry',
-            key: 'docEntry',
-            width: '15%',
-            ...getColumnSearchProps('docEntry'),
+            title: 'Hudud',
+            dataIndex: 'cardName',
+            key: 'cardName',
+            width: '20%',
+            ...getColumnSearchProps('cardName'),
         },
         {
-            title: 'Ombordan',
-            dataIndex: 'fromWarehouseCode',
-            key: 'fromWarehouseCode',
-            width: '15%',
-            ...getColumnSearchProps('fromWarehouseCode'),
+            title: 'Mijoz',
+            dataIndex: 'cardName',
+            key: 'cardName',
+            width: '20%',
+            ...getColumnSearchProps('cardName'),
         },
         {
-            title: 'Omborga',
-            dataIndex: 'toWarehouseCode',
-            key: 'toWarehouseCode',
+            title: 'Oy boshiga qoldiq',
+            dataIndex: 'docNum',
+            key: 'docNum',
             width: '15%',
-            ...getColumnSearchProps('toWarehouseCode'),
+            ...getColumnSearchProps('docNum'),
         },
+        {
+            title: 'Shu oydagi sotuv/ USD',
+            dataIndex: 'docDueDate',
+            key: 'docDueDate',
+            width: '15%',
+            ...getColumnSearchProps('docDueDate'),
+        },
+        {
+            title: 'To\'langan pul',
+            dataIndex: 'docTotal',
+            key: 'docTotal',
+            width: '15%',
+            render: (text) => `${text} USD`,
+        },
+        {
+            title: 'Joriy qoldiq',
+            dataIndex: 'slpName',
+            key: 'slpName',
+            width: '15%',
+            ...getColumnSearchProps('slpName'),
+        },
+        {
+            title: 'Pul aylanish ko`rsatgichi ',
+            dataIndex: 'docDueDate',
+            key: 'docDueDate',
+            width: '15%',
+            ...getColumnSearchProps('docDueDate'),
+        },
+        {
+            title: 'Mas`ul sotuv menejeri ',
+            dataIndex: 'docDueDate',
+            key: 'docDueDate',
+            width: '15%',
+            ...getColumnSearchProps('docDueDate'),
+        },
+        {
+            title: 'To`lanishi kerak ',
+            dataIndex: 'docDueDate',
+            key: 'docDueDate',
+            width: '15%',
+            ...getColumnSearchProps('docDueDate'),
+        },
+        {
+            title: 'Shu oydagi sotuv miqdori/ KG ',
+            dataIndex: 'docDueDate',
+            key: 'docDueDate',
+            width: '15%',
+            ...getColumnSearchProps('docDueDate'),
+        },
+
     ];
+
+    const handleRowClick = (record) => {
+        setSelectedRow(record);
+        setIsModalOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setSelectedRow(null);
+        setIsModalOpen(false);
+    };
 
     return (
         <Layout>
-            <h3 className={'pt-16 pb-10 px-12 text-2xl font-bold border-b-2'}>Yuk ko'chirish</h3>
-            <Table className={'py-8 px-8'} columns={columns} dataSource={data} loading={isLoading} />
+            <h3 className={'pt-16 pb-10 px-12 text-2xl font-bold border-b-2'}>Mijozlar ro'yxati</h3>
+            <Table
+                className={'py-8 px-8 w-[1800px] overflow-x-scroll'}
+                columns={columns}
+                dataSource={data}
+                loading={isLoading}
+
+                onRow={(record) => ({
+                    onClick: () => handleRowClick(record), // Set row click event
+                })}
+            />
+            {selectedRow && (
+                <RowDetailsModal
+                    open={isModalOpen}
+                    onClose={handleModalClose}
+                    rowData={selectedRow}
+                />
+            )}
         </Layout>
     );
 };
 
-export default MovingCargo;
+export default ClientList;

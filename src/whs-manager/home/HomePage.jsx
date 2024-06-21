@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import Layout from "../Layout/index.jsx";
+import Layout from "../Layout/WhsManager.jsx";
 import MySales from "../../pages/my-sales/MySales.jsx";
 import {useNavigate} from "react-router";
 import { message } from "antd"

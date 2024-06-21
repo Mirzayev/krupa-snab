@@ -11,6 +11,8 @@ import WarehouseAccount from "../pages/ warehouse-accout/ WarehouseAccout.jsx";
 import MovingCargo from "../pages/moving-cargo/MovingCargo.jsx";
 import MovingCargoRequest from "../pages/moving-cargo-request/MovingCargoRequest.jsx";
 import MainPage from "../pages/main/MainPage.jsx";
+import WhsManager from "./Layout/WhsManager.jsx";
+import ClientList from "../components/clients-list/ClientList.jsx";
 
 
  function RootLayout(){
@@ -20,7 +22,7 @@ import MainPage from "../pages/main/MainPage.jsx";
         <BrowserRouter>
             <Routes >
                 <Route index  element={<SIgnUp/>} />
-                <Route  path={'/home'} element={<HomePage/>} />
+                <Route  path={'/home'} element={<WhsManager/>} />
                 <Route  path={'/my-sales'} element={<MySales/>} />
                 <Route  path={'/sales-department'} element={<SalesDepartment/>} />
                 <Route  path={'/loaded-sales'} element={<LoadedSales/>} />
@@ -30,6 +32,9 @@ import MainPage from "../pages/main/MainPage.jsx";
                 <Route  path={'/moving-cargo'} element={<MovingCargo/>} />
                 <Route  path={'/moving-cargo-request'} element={<MovingCargoRequest/>} />
                 <Route  path={'/main-page'} element={<MainPage/>} />
+                <Route  path={'/client-list'} element={<ClientList/>} />
+
+
             </Routes>
         </BrowserRouter>
     )

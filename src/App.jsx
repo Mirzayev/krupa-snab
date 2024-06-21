@@ -7,9 +7,8 @@ import RootLayout from "./whs-manager/RootLayout.jsx";
 
 function App() {
     return (
-        <div className="">
+
             <RootLayout/>
-        </div>
     )
 }
 
