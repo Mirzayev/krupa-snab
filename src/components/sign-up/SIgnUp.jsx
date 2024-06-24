@@ -90,6 +90,7 @@ export default function SignUp() {
                             onClick={showPassword}
                             className="fa-solid fa-eye-slash absolute text-gray-400 right-5 cursor-pointer lg:top-6 top-3"
                         ></i>
+
                     </div>
                     <button
                         onClick={getUserData}

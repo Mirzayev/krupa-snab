@@ -13,6 +13,10 @@ import MovingCargoRequest from "../pages/moving-cargo-request/MovingCargoRequest
 import MainPage from "../pages/main/MainPage.jsx";
 import WhsManager from "./Layout/WhsManager.jsx";
 import ClientList from "../components/clients-list/ClientList.jsx";
+import AccountsReceivable from "../components/debitor/AccountsReceivable.jsx";
+import SalesOrders from "../pages/sales-manager/sales-orders-salesManager/SalesOrders.jsx";
+import LoadedItems from "../pages/sales-manager/loaded-items/LoadedItems.jsx";
+import SellerCompletedSales from "../pages/sales-manager/completed-sales/SellerCompletedSales.jsx";
 
 
  function RootLayout(){
@@ -33,6 +37,11 @@ import ClientList from "../components/clients-list/ClientList.jsx";
                 <Route  path={'/moving-cargo-request'} element={<MovingCargoRequest/>} />
                 <Route  path={'/main-page'} element={<MainPage/>} />
                 <Route  path={'/client-list'} element={<ClientList/>} />
+                <Route  path={'/accounts-receivable'} element={<AccountsReceivable/>} />
+                <Route  path={'/seller/sales-orders'} element={<SalesOrders/>} />
+                <Route  path={'/seller/loaded-items'} element={<LoadedItems/>} />
+                <Route  path={'/seller/completed-sales'} element={<SellerCompletedSales/>} />
+
 
 
             </Routes>

@@ -2,33 +2,35 @@ import React, { useEffect, useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table } from 'antd';
 import Highlighter from 'react-highlight-words';
-import Layout from "../../whs-manager/Layout/WhsManager.jsx";
-import API from "../../store/API.jsx";
-import RowDetailsModal from "../../components/modal/RowDetailsModal.jsx";
-import AddOrder from "../add-order/AddOrder.jsx";
-import moment from 'moment';
+import Layout from "../../../whs-manager/Layout/WhsManager.jsx";
+import RowDetailsModal from "../../../components/modal/RowDetailsModal.jsx";
+import AddProductModal from "../../../components/add-product-modal/AddProductModal.jsx";
+import API from "../../../store/API.jsx";
 
-const MySales = () => {
+const SalesOrders = () => {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [hasMorePages, setHasMorePages] = useState(true);
     const searchInput = useRef(null);
     const [open, setOpen] = useState(false);
     const [selectedRow, setSelectedRow] = useState(null);
-    const [addSaleModalOpen, setAddSaleModalOpen] = useState(false);
+    const [addProductModalOpen, setAddProductModalOpen] = useState(false);
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        fetchData(currentPage);
+    }, [currentPage]);
 
-    const fetchData = async () => {
+    const fetchData = async (page) => {
         setIsLoading(true);
         try {
-            const response = await API.get('/meningsotuvlarim/no-pagination?ownerCode=12');
+            const response = await API.get(`/tasdiqlanganbuyurtmalar/yangisotuvlar?pageToken=${page}`);
             const res = await response.data;
             const dataWithKeys = res.map((item, index) => ({ ...item, key: index }));
             setData(dataWithKeys);
+            setHasMorePages(dataWithKeys.length > 0);
             setIsLoading(false);
         } catch (error) {
             console.log(error);
@@ -135,7 +137,6 @@ const MySales = () => {
             dataIndex: 'docDueDate',
             key: 'docDueDate',
             width: '15%',
-            render: (text) => moment(text).format('DD.MM.YYYY'),
             ...getColumnSearchProps('docDueDate'),
         },
         {
@@ -165,28 +166,43 @@ const MySales = () => {
         setOpen(false);
     };
 
-    const handleAddSaleModalOpen = () => {
-        setAddSaleModalOpen(true);
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
 
-    const handleAddSaleModalClose = () => {
-        setAddSaleModalOpen(false);
+    const handleNextPage = () => {
+        if (hasMorePages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     return (
         <Layout>
             <h3 className="pt-16 pb-10 px-12 text-2xl font-bold border-b-2">Sotuv so`rovnomasi</h3>
 
-            <div className="flex justify-end my-10 px-10">
-                <Button className="px-10 py-4" type="primary" onClick={handleAddSaleModalOpen}>
+            <div className="flex justify-between my-10 px-10">
+                <div className={'font-bold text-xl'}>Sahifa : {currentPage}</div>
+                <Button className="px-10 py-4" type="primary" onClick={() => setAddProductModalOpen(true)}>
                     + Qo'shish
                 </Button>
             </div>
+            <div className="flex justify-end gap-5 px-10 py-4">
+                <Button onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Oldingi
+                </Button>
+                <Button onClick={handleNextPage} disabled={!hasMorePages}>
+                    Keyingi
+                </Button>
+            </div>
+
             <Table
                 className="py-8 px-8"
                 columns={columns}
                 dataSource={data}
                 loading={isLoading}
+                pagination={false}
                 onRow={(record) => ({
                     onClick: () => handleModalOpen(record),
                 })}
@@ -196,13 +212,12 @@ const MySales = () => {
                 onClose={handleModalClose}
                 rowData={selectedRow}
             />
-            <AddOrder
-                open={addSaleModalOpen}
-                onClose={handleAddSaleModalClose}
-                fetchData={fetchData}
+            <AddProductModal
+                open={addProductModalOpen}
+                onClose={() => setAddProductModalOpen(false)}
             />
         </Layout>
     );
 };
 
-export default MySales;
+export default SalesOrders;

@@ -19,7 +19,7 @@ const ClientList = () => {
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await API.get('/yuklanganbuyurtmalar/no-pagination');
+                const response = await API.get('/businesspartners/businesspartners');
                 const res = await response.data;
                 setData(res);
                 setIsLoading(false);
@@ -141,73 +141,73 @@ const ClientList = () => {
     const columns = [
         {
             title: 'Hudud',
-            dataIndex: 'cardName',
-            key: 'cardName',
+            dataIndex: 'region',
+            key: 'region',
             width: '20%',
-            ...getColumnSearchProps('cardName'),
+            ...getColumnSearchProps('region'),
         },
         {
             title: 'Mijoz',
-            dataIndex: 'cardName',
-            key: 'cardName',
+            dataIndex: 'realizators',
+            key: 'realizators',
             width: '20%',
-            ...getColumnSearchProps('cardName'),
+            ...getColumnSearchProps('realizators'),
         },
         {
             title: 'Oy boshiga qoldiq',
-            dataIndex: 'docNum',
-            key: 'docNum',
+            dataIndex: 'balanceFirstDayOfTheMonth',
+            key: 'balanceFirstDayOfTheMonth',
             width: '15%',
-            ...getColumnSearchProps('docNum'),
+            ...getColumnSearchProps('balanceFirstDayOfTheMonth'),
         },
         {
             title: 'Shu oydagi sotuv/ USD',
-            dataIndex: 'docDueDate',
-            key: 'docDueDate',
+            dataIndex: 'currentAccountBalance',
+            key: 'currentAccountBalance',
             width: '15%',
-            ...getColumnSearchProps('docDueDate'),
+            ...getColumnSearchProps('currentAccountBalance'),
         },
         {
             title: 'To\'langan pul',
-            dataIndex: 'docTotal',
-            key: 'docTotal',
+            dataIndex: 'paidMoney',
+            key: 'paidMoney',
             width: '15%',
             render: (text) => `${text} USD`,
         },
         {
             title: 'Joriy qoldiq',
-            dataIndex: 'slpName',
-            key: 'slpName',
+            dataIndex: 'currentAccountBalance',
+            key: 'currentAccountBalance',
             width: '15%',
-            ...getColumnSearchProps('slpName'),
+            ...getColumnSearchProps('currentAccountBalance'),
         },
         {
             title: 'Pul aylanish ko`rsatgichi ',
-            dataIndex: 'docDueDate',
-            key: 'docDueDate',
+            dataIndex: 'moneySpeed',
+            key: 'moneySpeed',
             width: '15%',
-            ...getColumnSearchProps('docDueDate'),
+            ...getColumnSearchProps('moneySpeed'),
         },
         {
             title: 'Mas`ul sotuv menejeri ',
-            dataIndex: 'docDueDate',
-            key: 'docDueDate',
+            dataIndex: 'salesPerson',
+            key: 'salesPerson',
             width: '15%',
-            ...getColumnSearchProps('docDueDate'),
+            ...getColumnSearchProps('salesPerson'),
         },
         {
             title: 'To`lanishi kerak ',
-            dataIndex: 'docDueDate',
-            key: 'docDueDate',
+            dataIndex: 'balanceLastDayOfTheMonth',
+            key: 'balanceLastDayOfTheMonth',
             width: '15%',
-            ...getColumnSearchProps('docDueDate'),
+            ...getColumnSearchProps('balanceLastDayOfTheMonth'),
         },
         {
             title: 'Shu oydagi sotuv miqdori/ KG ',
-            dataIndex: 'docDueDate',
-            key: 'docDueDate',
+            dataIndex: 'totalAmountReceived',
+            key: 'totalAmountReceived',
             width: '15%',
-            ...getColumnSearchProps('docDueDate'),
+            ...getColumnSearchProps('totalAmountReceived'),
         },
 
     ];

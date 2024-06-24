@@ -181,16 +181,7 @@ const SalesDepartment = () => {
             width: '15%',
             ...getColumnSearchProps('docDueDate'),
         },
-        {
-            title: 'Yuklash',
-            key: 'action',
-            width: '15%',
-            render: (_, record) => (
-                <Button type="primary" onClick={() => handleRowClick(record)}>
-                    Yuklash
-                </Button>
-            ),
-        },
+
     ];
 
     const handleRowClick = (record) => {
